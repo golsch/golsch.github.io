@@ -52,7 +52,7 @@ p {
 }
 
 .hg-header {
-	background-color: hsla(31,15%,50%,.1)
+	background-color: rgba(147, 128, 108, 0.1)
 	color: #fff;
 	font-size: 2rem;
 	font-weight: 700;
@@ -64,7 +64,7 @@ p {
 }
 
 .hg-footer {
-	background-color: hsla(31,15%,50%,.1)
+	background-color: rgba(147, 128, 108, 0.1)
 	color: #fff;
 	font-size: 1.2rem;
 	font-style: italic;
