@@ -53,10 +53,10 @@ p {
 
 .hg-header {
 	background-color: rgba(147, 128, 108, 0.1)
-	color: #fff;
+	color: rgb(64, 64, 64);
 	font-size: 2rem;
-	font-weight: 700;
-	font-style: italic;
+	font-weight: 600;
+	font-style: normal;
 	display: flex;
 	justify-content: center;
 	align-items: center;
