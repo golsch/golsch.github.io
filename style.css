@@ -52,7 +52,8 @@ p {
 }
 
 .hg-header {
-	background-color: #ffdb3a;
+	background-color: rgb(100, 100, 100);
+	color: #fff;
 	font-size: 2rem;
 	font-weight: 700;
 	font-style: italic;
