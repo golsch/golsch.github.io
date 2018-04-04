@@ -23,6 +23,9 @@ header {
 	position: fixed;
 	background: #F1F3F4;
 	border-color: #d5d5d5;
+	left: 0;
+	right: 0;
+	top:0;
 }
 
 header img {
