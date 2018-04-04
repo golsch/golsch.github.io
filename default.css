@@ -74,7 +74,6 @@ main {
 	display: block;
 	background: #c4ced3;
 	border-color: #8a9da8;
-	margin-left: 15em;
 	min-width: 16em;
 	/* Mindestbreite (der Ueberschrift) verhindert Anzeigefehler in modernen Browsern */
 }
