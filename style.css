@@ -58,7 +58,7 @@ p {
 	font-weight: 700;
 	font-style: italic;
 
-	display: flex;
+	display: fixed;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
