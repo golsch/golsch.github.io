@@ -20,6 +20,7 @@ aside {
 }
 
 header {
+	position: fixed;
 	background: #F1F3F4;
 	border-color: #d5d5d5;
 }
