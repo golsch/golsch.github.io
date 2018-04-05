@@ -3,6 +3,7 @@ body {
     margin:0;
     padding:0;
     height:100%;
+    background:#323232;
 }
 
 #container {
@@ -14,16 +15,18 @@ body {
 margin: auto;
 padding-left:10px;
 padding-right:10px;
-font-family:  Arial, sans-serif;
-    font-size:25px;
-    font-weight:500;
+color:#fff;
+font-family: "opensansregular", Arial, Helvetica, sans-serif;
+font-size: 15pt;
+    font-weight:400;
+    text-transform: uppercase;
 max-width: 800px;
 }
 
 #header {
-    background:#f1f1f1;
-padding-top:10px;
-padding-bottom:10px;
+    background:#3C3C3C;
+padding-top:15px;
+padding-bottom:15px;
     
 }
 
@@ -34,6 +37,8 @@ padding-bottom:10px;
 margin: auto;
 padding-left:10px;
 padding-right:10px;
+
+color:#999;
 }
 
 #footer {
@@ -42,5 +47,16 @@ padding-right:10px;
     padding-left:0px;
     width:100%;
     height:20px;   /* Height of the footer */
-    background:#f1f1f1;
+    background:#232323;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+#footer_test{
+    margin: auto;
+    padding-left:10px;
+    padding-right:10px;
+    color:white;
+    max-width: 800px;
+    color:#999;
 }
