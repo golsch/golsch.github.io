@@ -39,9 +39,9 @@
 
 		grid-template-columns: 100%;
 		grid-template-rows: 100px 
-							50px 
+							0px
 							1fr
-							50px 
+							0px
 							30px;
 	}
 }
