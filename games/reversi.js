@@ -66,7 +66,7 @@ function board_hover(ev) {
 }
 
 function draw() {
-    canvas = document.getElementById('chess');
+    canvas = document.getElementById('reversi');
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
         BLOCK_SIZE = canvas.height / NUMBER_OF_ROWS;
