@@ -10,20 +10,30 @@ body {
     position:relative;
 }
 
-#header {
-    background:#f1f1f1;
-    padding:20px;
-    font-family:  Arial, sans-serif;
+#header_test {
+margin: auto;
+padding-left:10px;
+padding-right:10px;
+font-family:  Arial, sans-serif;
     font-size:25px;
     font-weight:500;
-    padding-left:30px;
+max-width: 800px;
+}
+
+#header {
+    background:#f1f1f1;
+padding-top:10px;
+padding-bottom:10px;
+    
 }
 
 #body {
     padding:0px;
     padding-bottom:20px;   /* Height of the footer */
-    padding-left:30px;
-    padding-right:30px;
+	max-width: 800px;
+margin: auto;
+padding-left:10px;
+padding-right:10px;
 }
 
 #footer {
