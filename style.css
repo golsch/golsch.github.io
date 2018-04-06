@@ -23,7 +23,7 @@ body {
     max-width: 800px;
 }
 
-#header {
+header {
     background:#3C3C3C;
     padding-top:15px;
     padding-bottom:15px;
@@ -40,7 +40,7 @@ body {
     color:#999;
 }
 
-#footer {
+footer {
     position:absolute;
     bottom:0;
     padding-left:0px;
