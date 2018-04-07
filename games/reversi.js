@@ -56,6 +56,14 @@ function drawBlock(x, y, color) {
     ctx.fillRect(y*(BLOCK_SIZE+SHADOW_SIZE), x*(BLOCK_SIZE+SHADOW_SIZE), BLOCK_SIZE, BLOCK_SIZE);
 }
 
+ function getRow(index) {
+		return parseInt(index / NUMBER_OF_COLS);
+}
+
+function getColumn(index) {
+		return index % NUMBER_OF_COLS;
+}
+
 function switchPlayer() {
     if(currentPlayer == COLOR_PLAYER_ONE) {
         currentPlayer = COLOR_PLAYER_TWO;
@@ -73,7 +81,7 @@ function drawBoard() {
             y++;
             x = 0;
         }
-        drawBlock(x, y, game_config[i]);
+        drawBlock(y, x, game_config[i]);
         x++;
     }
 }
@@ -87,13 +95,12 @@ function isPlayer(index){
 
 function isFlippable(index, player, direction) {
 		var flipsStones = false;
-		//move index into the direction, while it is on opposing or neutral positions
-		while (isPlayer(index)) {
+		while (isPlayer(index) && game_config[index]!=player) {
 			index = calcIndexTo(index, direction);
 			flipsStones = true;
 		}
 		//if the index ended on a field of the player, the row can be flipped.
-		if (!isPlayer(index) && flipsStones){
+		if (game_config[index] == player && flipsStones){
 			return true;
 		}
 		return false;
@@ -101,10 +108,8 @@ function isFlippable(index, player, direction) {
 
 function flip(index, player, direction) {
 		index = calcIndexTo(index, direction);
-		
 		if(isFlippable(index, player, direction)) {
-			while(isPlayer(index)) {
-				//updateStones(index, player);
+			while(isPlayer(index) && game_config[index]!=player) {
 				game_config[index] = player;
 				index = calcIndexTo(index, direction);
 			}
@@ -112,13 +117,13 @@ function flip(index, player, direction) {
 }
 
 function add(index, player) {
-		for(var i = 0; i < DIRECTIONS.length; i++) {
-			flip(index, player, DIRECTIONS[i]);
-		}
-		//updateStones(index, move.getCellType());
-		game_config[index] = player;
-	}
-
+    for(var i = 0; i < DIRECTIONS.length; i++) {
+        flip(index, player, DIRECTIONS[i]);
+    }
+    game_config[index] = player;
+    drawBlock(getRow(index), getColumn(index), player);
+    
+}
 
 function calcIndexTo(index, direction) {
     switch(direction) {
@@ -131,26 +136,15 @@ function calcIndexTo(index, direction) {
 		case "DOWNLEFT": return index + NUMBER_OF_COLS - 1;
 		case "DOWNRIGHT": return index + NUMBER_OF_COLS + 1;
 		
-		default: return 0;
+		default: console.log("fehler");
     }
 }
-
- function isPlaceable (i, player) {
-		for(var j = 0; j < DIRECTIONS.length; j++) {
-            index = calcIndexTo(i, DIRECTIONS[j]);
-			if(isFlippable(index, player, DIRECTIONS[j])) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 function board_click(ev) {
     var x = ev.clientX - canvas.offsetLeft,
     y = ev.clientY - canvas.offsetTop,
     clickedBlock = screenToBlock(x, y);
     game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
-    //drawBlock(clickedBlock.row, clickedBlock.col, currentPlayer);
     add(coordinatesToBlock(clickedBlock.row, clickedBlock.col), currentPlayer);
     drawBoard();
     switchPlayer();
