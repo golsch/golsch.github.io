@@ -144,7 +144,7 @@ function board_click(ev) {
     var x = ev.clientX - canvas.offsetLeft,
     y = ev.clientY - canvas.offsetTop,
     clickedBlock = screenToBlock(x, y);
-        if(game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] != currentPlayer) {
+        if(!isPlayer(coordinatesToBlock(clickedBlock.row, clickedBlock.col)) {
         game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
         add(coordinatesToBlock(clickedBlock.row, clickedBlock.col), currentPlayer);
         drawBoard();
