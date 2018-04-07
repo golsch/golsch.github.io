@@ -184,26 +184,33 @@ function mouse_out() {
     draw_block(current_row, current_col,current_config[block_to_index(current_row,current_col)]);
 }
 
+window.onresize = function(event) {
+    renew_canvas_size();
+};
+
+//dynamic canvas size
+function renew_canvas_size() {
+    if(window.innerWidth >800) {
+            ctx.canvas.width  = 800;
+            ctx.canvas.height = ctx.canvas.width;
+    }
+    else {
+        ctx.canvas.width = window.innerWidth-20;
+        ctx.canvas.height = ctx.canvas.width;
+    }
+        
+    block_size = (canvas.width/NUMBER_OF_COLS)-SHADOW_SIZE;
+    draw_board();
+}
+
 //init
 function draw() {
     canvas = document.getElementById('reversi');
     
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
-        
-        //dynamic canvas size
-        if(window.innerWidth >800) {
-            ctx.canvas.width  = 800;
-            ctx.canvas.height = ctx.canvas.width;
-        }
-        else {
-            ctx.canvas.width = window.innerWidth-20;
-            ctx.canvas.height = ctx.canvas.width;
-        }
-        
-        block_size = (canvas.width/NUMBER_OF_COLS)-SHADOW_SIZE;
         build_start_config();
-        draw_board();
+        renew_canvas_size();
         canvas.addEventListener('click', board_click, false);
         canvas.addEventListener("mousemove", board_hover);
         canvas.addEventListener ("mouseout", mouse_out, false);
