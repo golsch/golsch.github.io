@@ -16,7 +16,8 @@ var current_config = new Array();
 //------------------------------------
 var ctx = null;
 var canvas = null;
-var block_size = 100;
+var block_size = 0;
+var canvas_init_size = 0;
 //------------------------------------
 
 //build gameconfig with initial start options
@@ -184,14 +185,15 @@ function mouse_out() {
     draw_block(current_row, current_col,current_config[block_to_index(current_row,current_col)]);
 }
 
+//window resize event
 window.onresize = function(event) {
     renew_canvas_size();
 };
 
 //dynamic canvas size
 function renew_canvas_size() {
-    if(window.innerWidth >800) {
-            ctx.canvas.width  = 800;
+    if(window.innerWidth > canvas_init_size) {
+            ctx.canvas.width  = canvas_init_size;
             ctx.canvas.height = ctx.canvas.width;
     }
     else {
@@ -206,9 +208,9 @@ function renew_canvas_size() {
 //init
 function draw() {
     canvas = document.getElementById('reversi');
-    
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
+        canvas_init_size = canvas.width;
         build_start_config();
         renew_canvas_size();
         canvas.addEventListener('click', board_click, false);
