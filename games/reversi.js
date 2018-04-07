@@ -22,6 +22,7 @@ var current_x = -1;
 var current_y = -1;
 
 var game_config = new Array();
+var currentPlayer = COLOR_PLAYER_ONE;
 
 function buildStartConfig() {
     for (var i = 0; i < NUMBER_OF_COLS*NUMBER_OF_ROWS; i++) {
@@ -70,12 +71,11 @@ function drawBoard() {
 }
 
 function board_click(ev) {
-    current_color = COLOR_PLAYER_ONE;
     var x = ev.clientX - canvas.offsetLeft,
     y = ev.clientY - canvas.offsetTop,
     clickedBlock = screenToBlock(x, y);
-    drawBlock(clickedBlock.col, clickedBlock.row, COLOR_PLAYER_ONE);
-    get_color(x, y);
+    game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
+    drawBlock(clickedBlock.row, clickedBlock.col, currentPlayer);
 }
 
 function board_hover(ev) {
@@ -99,7 +99,7 @@ function draw() {
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
         drawBoard();
-        //canvas.addEventListener('click', board_click, false);
+        canvas.addEventListener('click', board_click, false);
         canvas.addEventListener("mousemove", board_hover);
     } else {
         alert("Canvas not supported!");
