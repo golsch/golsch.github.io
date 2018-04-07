@@ -9,8 +9,8 @@ const COLOR_HOVER = "grey";
 const DIRECTIONS =new Array("LEFT","RIGHT","UP", "DOWN", "UPLEFT", "UPRIGHT", "DOWNLEFT", "DOWNRIGHT");
 //------------------------------------
 var current_color = null;
-var current_x = -1;
-var current_y = -1;
+var current_row = -1;
+var current_col = -1;
 var current_player = COLOR_PLAYER_ONE;
 var current_config = new Array();
 //------------------------------------
@@ -18,6 +18,7 @@ var ctx = null;
 var canvas = null;
 //------------------------------------
 
+//build gameconfig with initial start options
 function build_start_config() {
     for (var index = 0; index < NUMBER_OF_COLS * NUMBER_OF_ROWS; index++) {
         if(index == ((NUMBER_OF_ROWS / 2) - 1)*NUMBER_OF_ROWS+NUMBER_OF_COLS / 2 - 1 || index ==(NUMBER_OF_ROWS / 2)*NUMBER_OF_ROWS + NUMBER_OF_COLS / 2) {
@@ -32,10 +33,12 @@ function build_start_config() {
     }
 }
 
+//calc block to index
 function block_to_index(x, y) {
     return x * NUMBER_OF_COLS + y;
 }
 
+//calc screen to block
 function screen_to_block(x, y) {
     return block =  {
         "row": Math.floor(x / BLOCK_SIZE),
@@ -48,14 +51,17 @@ function draw_block(x, y, color) {
     ctx.fillRect(x * (BLOCK_SIZE + SHADOW_SIZE), y * (BLOCK_SIZE + SHADOW_SIZE), BLOCK_SIZE, BLOCK_SIZE);
 }
 
+//get row with index
  function get_row(index) {
 		return parseInt(index / NUMBER_OF_COLS);
 }
 
-function get_column(index) {
+//get col with index
+function get_col(index) {
 		return index % NUMBER_OF_COLS;
 }
 
+//switch player current player
 function switch_player() {
     if(current_player == COLOR_PLAYER_ONE) {
         current_player = COLOR_PLAYER_TWO;
@@ -65,6 +71,7 @@ function switch_player() {
     }
 }
 
+//draw board with game config
 function draw_board() {
     var x = 0;
     var y = 0;
@@ -78,6 +85,7 @@ function draw_board() {
     }
 }
 
+//check block if it is playerblock
 function is_player(index){
     if(current_config[index] != COLOR_BOARD) {
         return true;
@@ -85,6 +93,7 @@ function is_player(index){
     return false;
 }
 
+//check direction if its flippable
 function is_flippable(index, player, direction) {
 		var flipsStones = false;
 		while (is_player(index) && current_config[index] != player) {
@@ -98,6 +107,7 @@ function is_flippable(index, player, direction) {
 		return false;
 }
 
+//flip stones in direction
 function flip(index, player, direction) {
 		index = index_to_direction(index, direction);
 		if(is_flippable(index, player, direction)) {
@@ -108,15 +118,17 @@ function flip(index, player, direction) {
 		}
 }
 
+//add new move
 function add(index, player) {
     for(var i = 0; i < DIRECTIONS.length; i++) {
         flip(index, player, DIRECTIONS[i]);
     }
     current_config[index] = player;
-    draw_block(get_row(index), get_column(index), player);
+    draw_block(get_row(index), get_col(index), player);
     
 }
 
+//calc step in direction to index
 function index_to_direction(index, direction) {
     switch(direction) {
 		case "LEFT": return --index;
@@ -128,10 +140,11 @@ function index_to_direction(index, direction) {
 		case "DOWNLEFT": return index + NUMBER_OF_COLS - 1;
 		case "DOWNRIGHT": return index + NUMBER_OF_COLS + 1;
 		
-		default: console.log("error, unkonwn direction");
+		default: alert("error, unkonwn direction");
     }
 }
 
+//click event form board (compute move)
 function board_click(ev) {
     var x = ev.clientX - canvas.offsetLeft,
     y = ev.clientY - canvas.offsetTop,
@@ -148,26 +161,29 @@ function board_click(ev) {
     }
 }
 
+//hover selected field
 function board_hover(ev) {
     var x = ev.clientX - canvas.offsetLeft;
     var y = ev.clientY - canvas.offsetTop;
     clickedBlock = screen_to_block(x, y);
     //field-switch
-    if(current_x != clickedBlock.row || current_y != clickedBlock.col) {
-        draw_block(current_x, current_y,current_config[block_to_index(current_x,current_y)]);
-        current_x = clickedBlock.row;
-        current_y = clickedBlock.col;
+    if(current_row != clickedBlock.row || current_col != clickedBlock.col) {
+        draw_block(current_row, current_col,current_config[block_to_index(current_row,current_col)]);
+        current_row = clickedBlock.row;
+        current_col = clickedBlock.col;
         //field is not a player
-        if(current_config[block_to_index(current_x,current_y)]==COLOR_BOARD) {
-            draw_block(current_x, current_y, COLOR_HOVER); 
+        if(current_config[block_to_index(current_row,current_col)]==COLOR_BOARD) {
+            draw_block(current_row, current_col, COLOR_HOVER); 
         }
     }
 }
 
+//event when mouse leaves canvas
 function mouse_out() {
-    draw_block(current_x, current_y,current_config[block_to_index(current_x,current_y)]);
+    draw_block(current_row, current_col,current_config[block_to_index(current_row,current_col)]);
 }
 
+//init
 function draw() {
     canvas = document.getElementById('reversi');
     if (canvas.getContext) {
@@ -178,6 +194,6 @@ function draw() {
         canvas.addEventListener("mousemove", board_hover);
         canvas.addEventListener ("mouseout", mouse_out, false);
     } else {
-        alert("Canvas not supported!");
+        alert("error, canvas not supported!");
     }
 }
