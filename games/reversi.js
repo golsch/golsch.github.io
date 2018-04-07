@@ -94,6 +94,10 @@ function board_hover(ev) {
     }
 }
 
+function mouse_out() {
+    drawBlock(current_x, current_y,game_config[coordinatesToBlock(current_x,current_y)]);
+}
+
 function draw() {
     canvas = document.getElementById('reversi');
     if (canvas.getContext) {
@@ -101,6 +105,7 @@ function draw() {
         drawBoard();
         canvas.addEventListener('click', board_click, false);
         canvas.addEventListener("mousemove", board_hover);
+        canvas.addEventListener ("mouseout", mouse_out, false);
     } else {
         alert("Canvas not supported!");
     }
