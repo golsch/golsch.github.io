@@ -17,7 +17,6 @@ var color_temp = null;
 var x_temp = null;
 var y_temp = null;
 
-
 var current_x = -1;
 var current_y = -1;
 
@@ -56,6 +55,15 @@ function drawBlock(x, y, color) {
     ctx.fillRect(y*(BLOCK_SIZE+SHADOW_SIZE), x*(BLOCK_SIZE+SHADOW_SIZE), BLOCK_SIZE, BLOCK_SIZE);
 }
 
+function switchPlayer() {
+    if(currentPlayer == COLOR_PLAYER_ONE) {
+        currentPlayer = COLOR_PLAYER_TWO;
+    }
+    else {
+        currentPlayer = COLOR_PLAYER_ONE;
+    }
+}
+
 function drawBoard() {
     buildStartConfig();
     var x = 0;
@@ -76,6 +84,7 @@ function board_click(ev) {
     clickedBlock = screenToBlock(x, y);
     game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
     drawBlock(clickedBlock.row, clickedBlock.col, currentPlayer);
+    switchPlayer();
 }
 
 function board_hover(ev) {
