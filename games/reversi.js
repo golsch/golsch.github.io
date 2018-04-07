@@ -22,6 +22,7 @@ var current_y = -1;
 
 var game_config = new Array();
 var currentPlayer = COLOR_PLAYER_ONE;
+const DIRECTIONS =new Array("LEFT","RIGHT","UP", "DOWN", "UPLEFT", "UPRIGHT", "DOWNLEFT", "DOWNRIGHT");
 
 function buildStartConfig() {
     for (var i = 0; i < NUMBER_OF_COLS*NUMBER_OF_ROWS; i++) {
@@ -65,7 +66,6 @@ function switchPlayer() {
 }
 
 function drawBoard() {
-    buildStartConfig();
     var x = 0;
     var y = 0;
     for (var i = 0; i < NUMBER_OF_COLS*NUMBER_OF_ROWS; i++) {
@@ -78,12 +78,81 @@ function drawBoard() {
     }
 }
 
+function isPlayer(index){
+    if(game_config[index]!=COLOR_BOARD) {
+        return true;
+    }
+    return false;
+}
+
+function isFlippable(index, player, direction) {
+		var flipsStones = false;
+		//move index into the direction, while it is on opposing or neutral positions
+		while (isPlayer(index)) {
+			index = calcIndexTo(index, direction);
+			flipsStones = true;
+		}
+		//if the index ended on a field of the player, the row can be flipped.
+		if (!isPlayer(index) && flipsStones){
+			return true;
+		}
+		return false;
+}
+
+function flip(index, player, direction) {
+		index = calcIndexTo(index, direction);
+		
+		if(isFlippable(index, player, direction)) {
+			while(isPlayer(index)) {
+				//updateStones(index, player);
+				game_config[index] = player;
+				index = calcIndexTo(index, direction);
+			}
+		}
+}
+
+function add(index, player) {
+		for(var i = 0; i < DIRECTIONS.length; i++) {
+			flip(index, player, DIRECTIONS[i]);
+		}
+		//updateStones(index, move.getCellType());
+		game_config[index] = player;
+	}
+
+
+function calcIndexTo(index, direction) {
+    switch(direction) {
+		case "LEFT": return --index;
+		case "RIGHT": return ++index;
+		case "UP": return index - NUMBER_OF_COLS;
+		case "DOWN": return index + NUMBER_OF_COLS;
+		case "UPLEFT": return index - NUMBER_OF_COLS - 1;
+		case "UPRIGHT": return index - NUMBER_OF_COLS + 1;
+		case "DOWNLEFT": return index + NUMBER_OF_COLS - 1;
+		case "DOWNRIGHT": return index + NUMBER_OF_COLS + 1;
+		
+		default: return 0;
+    }
+}
+
+ function isPlaceable (i, player) {
+		for(var j = 0; j < DIRECTIONS.length; j++) {
+            index = calcIndexTo(i, DIRECTIONS[j]);
+			if(isFlippable(index, player, DIRECTIONS[j])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 function board_click(ev) {
     var x = ev.clientX - canvas.offsetLeft,
     y = ev.clientY - canvas.offsetTop,
     clickedBlock = screenToBlock(x, y);
     game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
-    drawBlock(clickedBlock.row, clickedBlock.col, currentPlayer);
+    //drawBlock(clickedBlock.row, clickedBlock.col, currentPlayer);
+    add(coordinatesToBlock(clickedBlock.row, clickedBlock.col), currentPlayer);
+    drawBoard();
     switchPlayer();
 }
 
@@ -111,6 +180,7 @@ function draw() {
     canvas = document.getElementById('reversi');
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
+        buildStartConfig();
         drawBoard();
         canvas.addEventListener('click', board_click, false);
         canvas.addEventListener("mousemove", board_hover);
