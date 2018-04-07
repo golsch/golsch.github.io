@@ -1,7 +1,7 @@
 const NUMBER_OF_COLS = 8;
-const NUMBER_OF_ROWS = 8;
+//quadratic field
+const NUMBER_OF_ROWS = NUMBER_OF_COLS;
 const SHADOW_SIZE = 1;
-const BLOCK_SIZE = 100 - SHADOW_SIZE;
 const COLOR_BOARD = "white";
 const COLOR_PLAYER_ONE = "red";
 const COLOR_PLAYER_TWO = "green";
@@ -16,6 +16,7 @@ var current_config = new Array();
 //------------------------------------
 var ctx = null;
 var canvas = null;
+var block_size = 100;
 //------------------------------------
 
 //build gameconfig with initial start options
@@ -41,14 +42,14 @@ function block_to_index(x, y) {
 //calc screen to block
 function screen_to_block(x, y) {
     return block =  {
-        "row": Math.floor(x / BLOCK_SIZE),
-        "col": Math.floor(y / BLOCK_SIZE)
+        "row": Math.floor(x / block_size),
+        "col": Math.floor(y / block_size)
     };
 }
 
 function draw_block(x, y, color) {
     ctx.fillStyle = color;
-    ctx.fillRect(x * (BLOCK_SIZE + SHADOW_SIZE), y * (BLOCK_SIZE + SHADOW_SIZE), BLOCK_SIZE, BLOCK_SIZE);
+    ctx.fillRect(x * (block_size + SHADOW_SIZE), y * (block_size + SHADOW_SIZE), block_size, block_size);
 }
 
 //get row with index
@@ -186,8 +187,21 @@ function mouse_out() {
 //init
 function draw() {
     canvas = document.getElementById('reversi');
+    
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
+        
+        //dynamic canvas size
+        if(window.innerWidth >800) {
+            ctx.canvas.width  = 800;
+            ctx.canvas.height = ctx.canvas.width;
+        }
+        else {
+            ctx.canvas.width = window.innerWidth-20;
+            ctx.canvas.height = ctx.canvas.width;
+        }
+        
+        block_size = (canvas.width/NUMBER_OF_COLS)-SHADOW_SIZE;
         build_start_config();
         draw_board();
         canvas.addEventListener('click', board_click, false);
