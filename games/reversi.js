@@ -6,74 +6,66 @@ const COLOR_BOARD = "white";
 const COLOR_PLAYER_ONE = "red";
 const COLOR_PLAYER_TWO = "green";
 const COLOR_HOVER = "grey";
+const DIRECTIONS =new Array("LEFT","RIGHT","UP", "DOWN", "UPLEFT", "UPRIGHT", "DOWNLEFT", "DOWNRIGHT");
 //------------------------------------
-
-var ctx = null;
-var canvas = null;
-
 var current_color = null;
-var color_temp = null;
-
-var x_temp = null;
-var y_temp = null;
-
 var current_x = -1;
 var current_y = -1;
+var current_player = COLOR_PLAYER_ONE;
+var current_config = new Array();
+//------------------------------------
+var ctx = null;
+var canvas = null;
+//------------------------------------
 
-var game_config = new Array();
-var currentPlayer = COLOR_PLAYER_ONE;
-const DIRECTIONS =new Array("LEFT","RIGHT","UP", "DOWN", "UPLEFT", "UPRIGHT", "DOWNLEFT", "DOWNRIGHT");
-
-function buildStartConfig() {
-    for (var i = 0; i < NUMBER_OF_COLS*NUMBER_OF_ROWS; i++) {
-        if(i == 27 || i == 36) {
-            game_config[i] = COLOR_PLAYER_ONE;
+function build_start_config() {
+    for (var index = 0; index < NUMBER_OF_COLS * NUMBER_OF_ROWS; index++) {
+        if(index == ((NUMBER_OF_ROWS / 2) - 1)*NUMBER_OF_ROWS+NUMBER_OF_COLS / 2 - 1 || index ==(NUMBER_OF_ROWS / 2)*NUMBER_OF_ROWS + NUMBER_OF_COLS / 2) {
+            current_config[index] = COLOR_PLAYER_ONE;
         } 
-        else if (i == 28 || i == 35) {
-            game_config[i] = COLOR_PLAYER_TWO;
+        else if (index == ((NUMBER_OF_ROWS / 2)) * NUMBER_OF_ROWS + NUMBER_OF_COLS / 2 - 1 || index ==((NUMBER_OF_ROWS / 2) - 1) * NUMBER_OF_ROWS + NUMBER_OF_COLS / 2) {
+            current_config[index] = COLOR_PLAYER_TWO;
         }
         else {
-            game_config[i] = COLOR_BOARD;
+            current_config[index] = COLOR_BOARD;
         }
-        
     }
 }
 
-function coordinatesToBlock(x,y) {
-    return x*NUMBER_OF_ROWS+y;
+function block_to_index(x, y) {
+    return x * NUMBER_OF_COLS + y;
 }
 
-function screenToBlock(x, y) {
-    var block =  {
-        "row": Math.floor(y / BLOCK_SIZE),
-        "col": Math.floor(x / BLOCK_SIZE)
+function screen_to_block(x, y) {
+    return block =  {
+        "row": Math.floor(x / BLOCK_SIZE),
+        "col": Math.floor(y / BLOCK_SIZE)
     };
-    return block;
 }
 
-function drawBlock(x, y, color) {
-    ctx.fillStyle=color;
-    ctx.fillRect(y*(BLOCK_SIZE+SHADOW_SIZE), x*(BLOCK_SIZE+SHADOW_SIZE), BLOCK_SIZE, BLOCK_SIZE);
+function draw_block(x, y, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x * (BLOCK_SIZE + SHADOW_SIZE), y * (BLOCK_SIZE + SHADOW_SIZE), BLOCK_SIZE, BLOCK_SIZE);
 }
 
- function getRow(index) {
+ function get_row(index) {
 		return parseInt(index / NUMBER_OF_COLS);
 }
 
-function getColumn(index) {
+function get_column(index) {
 		return index % NUMBER_OF_COLS;
 }
 
-function switchPlayer() {
-    if(currentPlayer == COLOR_PLAYER_ONE) {
-        currentPlayer = COLOR_PLAYER_TWO;
+function switch_player() {
+    if(current_player == COLOR_PLAYER_ONE) {
+        current_player = COLOR_PLAYER_TWO;
     }
     else {
-        currentPlayer = COLOR_PLAYER_ONE;
+        current_player = COLOR_PLAYER_ONE;
     }
 }
 
-function drawBoard() {
+function draw_board() {
     var x = 0;
     var y = 0;
     for (var i = 0; i < NUMBER_OF_COLS*NUMBER_OF_ROWS; i++) {
@@ -81,37 +73,37 @@ function drawBoard() {
             y++;
             x = 0;
         }
-        drawBlock(y, x, game_config[i]);
+        draw_block(y, x, current_config[i]);
         x++;
     }
 }
 
-function isPlayer(index){
-    if(game_config[index]!=COLOR_BOARD) {
+function is_player(index){
+    if(current_config[index] != COLOR_BOARD) {
         return true;
     }
     return false;
 }
 
-function isFlippable(index, player, direction) {
+function is_flippable(index, player, direction) {
 		var flipsStones = false;
-		while (isPlayer(index) && game_config[index]!=player) {
-			index = calcIndexTo(index, direction);
+		while (is_player(index) && current_config[index] != player) {
+			index = index_to_direction(index, direction);
 			flipsStones = true;
 		}
 		//if the index ended on a field of the player, the row can be flipped.
-		if (game_config[index] == player && flipsStones){
+		if (current_config[index] == player && flipsStones){
 			return true;
 		}
 		return false;
 }
 
 function flip(index, player, direction) {
-		index = calcIndexTo(index, direction);
-		if(isFlippable(index, player, direction)) {
-			while(isPlayer(index) && game_config[index]!=player) {
-				game_config[index] = player;
-				index = calcIndexTo(index, direction);
+		index = index_to_direction(index, direction);
+		if(is_flippable(index, player, direction)) {
+			while(is_player(index) && current_config[index]!=player) {
+				current_config[index] = player;
+				index = index_to_direction(index, direction);
 			}
 		}
 }
@@ -120,12 +112,12 @@ function add(index, player) {
     for(var i = 0; i < DIRECTIONS.length; i++) {
         flip(index, player, DIRECTIONS[i]);
     }
-    game_config[index] = player;
-    drawBlock(getRow(index), getColumn(index), player);
+    current_config[index] = player;
+    draw_block(get_row(index), get_column(index), player);
     
 }
 
-function calcIndexTo(index, direction) {
+function index_to_direction(index, direction) {
     switch(direction) {
 		case "LEFT": return --index;
 		case "RIGHT": return ++index;
@@ -136,51 +128,52 @@ function calcIndexTo(index, direction) {
 		case "DOWNLEFT": return index + NUMBER_OF_COLS - 1;
 		case "DOWNRIGHT": return index + NUMBER_OF_COLS + 1;
 		
-		default: console.log("fehler");
+		default: console.log("error, unkonwn direction");
     }
 }
 
 function board_click(ev) {
     var x = ev.clientX - canvas.offsetLeft,
     y = ev.clientY - canvas.offsetTop,
-    clickedBlock = screenToBlock(x, y);
-        if(!isPlayer(coordinatesToBlock(clickedBlock.row, clickedBlock.col))) {
-        game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
-        add(coordinatesToBlock(clickedBlock.row, clickedBlock.col), currentPlayer);
-        drawBoard();
-        switchPlayer();
+    clickedBlock = screen_to_block(x, y);
+    //check that block is empty
+    if(!is_player(block_to_index(clickedBlock.row, clickedBlock.col))) {
+        current_config[block_to_index(clickedBlock.row, clickedBlock.col)] = current_player;
+        add(block_to_index(clickedBlock.row, clickedBlock.col), current_player);
+        draw_board();
+        switch_player();
     }
     else {
-        alert("move is not supported");
+        alert("error, move is not supported");
     }
 }
 
 function board_hover(ev) {
     var x = ev.clientX - canvas.offsetLeft;
     var y = ev.clientY - canvas.offsetTop;
-    clickedBlock = screenToBlock(x, y);
+    clickedBlock = screen_to_block(x, y);
     //field-switch
     if(current_x != clickedBlock.row || current_y != clickedBlock.col) {
-        drawBlock(current_x, current_y,game_config[coordinatesToBlock(current_x,current_y)]);
+        draw_block(current_x, current_y,current_config[block_to_index(current_x,current_y)]);
         current_x = clickedBlock.row;
         current_y = clickedBlock.col;
         //field is not a player
-        if(game_config[coordinatesToBlock(current_x,current_y)]==COLOR_BOARD) {
-            drawBlock(current_x, current_y, COLOR_HOVER); 
+        if(current_config[block_to_index(current_x,current_y)]==COLOR_BOARD) {
+            draw_block(current_x, current_y, COLOR_HOVER); 
         }
     }
 }
 
 function mouse_out() {
-    drawBlock(current_x, current_y,game_config[coordinatesToBlock(current_x,current_y)]);
+    draw_block(current_x, current_y,current_config[block_to_index(current_x,current_y)]);
 }
 
 function draw() {
     canvas = document.getElementById('reversi');
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
-        buildStartConfig();
-        drawBoard();
+        build_start_config();
+        draw_board();
         canvas.addEventListener('click', board_click, false);
         canvas.addEventListener("mousemove", board_hover);
         canvas.addEventListener ("mouseout", mouse_out, false);
