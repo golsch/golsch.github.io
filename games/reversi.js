@@ -197,7 +197,7 @@ function renew_canvas_size() {
             ctx.canvas.height = ctx.canvas.width;
     }
     else {
-        ctx.canvas.width = window.innerWidth-20;
+        ctx.canvas.width = window.innerWidth - 20;
         ctx.canvas.height = ctx.canvas.width;
     }
         
