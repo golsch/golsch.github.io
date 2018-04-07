@@ -144,10 +144,15 @@ function board_click(ev) {
     var x = ev.clientX - canvas.offsetLeft,
     y = ev.clientY - canvas.offsetTop,
     clickedBlock = screenToBlock(x, y);
-    game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
-    add(coordinatesToBlock(clickedBlock.row, clickedBlock.col), currentPlayer);
-    drawBoard();
-    switchPlayer();
+        if(game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] != currentPlayer) {
+        game_config[coordinatesToBlock(clickedBlock.row, clickedBlock.col)] = currentPlayer;
+        add(coordinatesToBlock(clickedBlock.row, clickedBlock.col), currentPlayer);
+        drawBoard();
+        switchPlayer();
+    }
+    else {
+        alert("move is not supported");
+    }
 }
 
 function board_hover(ev) {
