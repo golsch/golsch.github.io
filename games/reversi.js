@@ -129,11 +129,11 @@ function get_winner() {
     draw_board();
 
     if(points_player_one == points_player_two) {
-        alert("unentschieden!");
+        alert("Unentschieden!");
     } else if(points_player_one > points_player_two) {
-        alert("spieler 1 gewinnt");
+        alert("Sie gewinnen!");
     } else {
-        alert("spieler 2 gewinnt");
+        alert("Sie verlieren!");
     }
 }
 
