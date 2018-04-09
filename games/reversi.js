@@ -125,6 +125,8 @@ function get_winner() {
             points_player_two++;
         }
     }
+    
+    draw_board();
 
     if(points_player_one == points_player_two) {
         alert("unentschieden!");
@@ -265,20 +267,15 @@ function board_click(ev) {
         add(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG), COLOR_PLAYER_ONE);
         draw_board();
         
-    
-        //low_ai(COLOR_PLAYER_TWO);
+        low_ai(COLOR_PLAYER_TWO);
         
-        do {
+        while(possible_moves(COLOR_PLAYER_ONE).length == 0 && possible_moves(COLOR_PLAYER_TWO).length != 0) {
             low_ai(COLOR_PLAYER_TWO);
-            if(possible_moves(COLOR_PLAYER_TWO).length == 0) {
-                get_winner();
-                break;
-            }
         }
-            while(possible_moves(COLOR_PLAYER_ONE).length == 0);
-        
-    } else {
-        alert("error, move is not supported");
+    
+        if(possible_moves(COLOR_PLAYER_TWO).length == 0 && possible_moves(COLOR_PLAYER_ONE).length == 0) {
+            get_winner();
+        }
     }
 }
 
