@@ -5,6 +5,7 @@ const ROWS = COLS;
 const SHADOW_SIZE = 1;
 const COLOR_BOARD = "white";
 const COLOR_PLAYER_ONE = "red";
+const COLOR_POSS_MOVE = "lightgoldenrodyellow";
 const COLOR_PLAYER_TWO = "green";
 const COLOR_HOVER = "grey";
 const COLOR_BLOCKED = "black";
@@ -43,6 +44,8 @@ function generate_map() {
     }
 }
 
+var pm = null;
+
 function get_row(index) {
     return parseInt(index / ROWS);
 }
@@ -77,7 +80,7 @@ function possible_moves(player) {
     console.log("give this sgit");
     var enemy_index_list = new Array();
     for (var index = 0; index < map.length; index++) {
-        if(is_player(index) && map[index] != player) {
+        if((is_player(index) && map[index] != player)) {
             enemy_index_list.push(index);
         }
     }
@@ -225,9 +228,28 @@ function index_to_direction(index, direction) {
     }
 }
 
+
+function draw_possible_moves(player) {
+    pm = possible_moves(player);
+    console.log(pm.length)
+    for(var i = 0; i < pm.length; i++) {
+        map[pm[i]] = COLOR_POSS_MOVE;
+    }
+}
+
+function undraw_possible_moves(player){
+    for(var i = 0; i < pm.length; i++) {
+        map[pm[i]] = COLOR_BOARD;
+    }
+}
+
 function low_ai(player) {
     add(possible_moves(player)[0], player);
+    draw_possible_moves(COLOR_PLAYER_ONE);
     draw_board();
+    undraw_possible_moves();
+    
+    
 }
 
 //click event form board (compute move)
@@ -239,18 +261,22 @@ function board_click(ev) {
     
     
     if(possible_moves(current_player).contains(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG)) ) {
+        //undraw_possible_moves();
         add(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG), COLOR_PLAYER_ONE);
         draw_board();
         
-        low_ai(COLOR_PLAYER_TWO);
+    
+        //low_ai(COLOR_PLAYER_TWO);
         
-        while(possible_moves(COLOR_PLAYER_ONE).length == 0) {
+        do {
+            low_ai(COLOR_PLAYER_TWO);
             if(possible_moves(COLOR_PLAYER_TWO).length == 0) {
                 get_winner();
                 break;
             }
-            low_ai(COLOR_PLAYER_TWO);
         }
+            while(possible_moves(COLOR_PLAYER_ONE).length == 0);
+        
     } else {
         alert("error, move is not supported");
     }
@@ -295,7 +321,10 @@ function renew_canvas_size() {
     }
         
     block_size = (canvas.width/(COLS - 2 * DEBUG)) - SHADOW_SIZE;
+    
+        draw_possible_moves(COLOR_PLAYER_ONE);
     draw_board();
+    undraw_possible_moves();
 }
 
 //init
@@ -306,8 +335,9 @@ function draw() {
         canvas_init_size = canvas.width;
         generate_map();    
         renew_canvas_size();
+        
         canvas.addEventListener('click', board_click, false);
-        canvas.addEventListener("mousemove", board_hover);
+        //canvas.addEventListener("mousemove", board_hover);
         canvas.addEventListener ("mouseout", mouse_out, false);
     } else {
         alert("error, canvas not supported!");
