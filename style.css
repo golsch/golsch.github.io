@@ -107,3 +107,11 @@ a:link, a:visited {
 a:hover {
     color: #fff;
 }
+
+#article-desc {
+    font-size: 12pt;
+}
+
+#article-date {
+    font-size: 10pt;
+}
