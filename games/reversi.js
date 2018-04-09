@@ -225,6 +225,11 @@ function index_to_direction(index, direction) {
     }
 }
 
+function low_ai(player) {
+    add(possible_moves(player)[0], player);
+    draw_board();
+}
+
 //click event form board (compute move)
 function board_click(ev) {
     var x = ev.clientX - canvas.offsetLeft,
@@ -234,16 +239,18 @@ function board_click(ev) {
     
     
     if(possible_moves(current_player).contains(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG)) ) {
-        add(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG), current_player);
+        add(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG), COLOR_PLAYER_ONE);
         draw_board();
-        switch_player();
-        if(possible_moves(current_player).length == 0) {
-            switch_player;
-            if(possible_moves(current_player).length == 0) {
+        
+        low_ai(COLOR_PLAYER_TWO);
+        
+        while(possible_moves(COLOR_PLAYER_ONE).length == 0) {
+            if(possible_moves(COLOR_PLAYER_TWO).length == 0) {
                 get_winner();
+                break;
             }
+            low_ai(COLOR_PLAYER_TWO);
         }
-        no_compute++;
     } else {
         alert("error, move is not supported");
     }
