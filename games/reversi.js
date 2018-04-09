@@ -1,4 +1,4 @@
-const COLS = 4 + 2;
+const COLS = 6 + 2;
 const DEBUG = 0;
 //quadratic field
 const ROWS = COLS;
