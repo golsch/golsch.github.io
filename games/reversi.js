@@ -1,5 +1,5 @@
 const COLS = 6 + 2;
-const DEBUG = 0;
+const DEBUG = 1;
 //quadratic field
 const ROWS = COLS;
 const SHADOW_SIZE = 1;
