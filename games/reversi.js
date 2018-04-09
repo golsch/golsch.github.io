@@ -1,4 +1,5 @@
 const COLS = 6 + 2;
+const DEBUG = 1;
 //quadratic field
 const ROWS = COLS;
 const SHADOW_SIZE = 1;
@@ -42,13 +43,13 @@ function generate_map() {
     }
 }
 
- function get_row(index) {
-		return parseInt(index / ROWS);
+function get_row(index) {
+    return parseInt(index / ROWS);
 }
 
 //get col with index
 function get_col(index) {
-		return index % COLS;
+    return index % COLS;
 }
 
 function block_to_index(x, y) {
@@ -68,12 +69,73 @@ function draw_block(x, y, color) {
     ctx.fillRect(x * (block_size + SHADOW_SIZE), y * (block_size + SHADOW_SIZE), block_size, block_size);
 }
 
+Array.prototype.contains = function (v) {
+    return this.indexOf(v) > -1;
+}
+
+function possible_moves(player) {
+    var enemy_index_list = new Array();
+    for (var index = 0; index < map.length; index++) {
+        if(is_player(map[index]) && map[index] != player) {
+           enemy_index_list.push(index);
+        }
+    }
+
+    //System.out.println("Potentielle Zuege:");
+    var potential_move_index_list = new Array();
+    for (var i = 0; i < enemy_index_list.length; i++) {
+        for (var j = 0; j < DIRECTIONS.length; j++) {
+            var index = calcIndexTo(enemy_index_list[i], DIRECTIONS[j]);
+            if(is_empty(map[index])) {
+                if(!potential_move_index_list.contains(index)) {
+                    potential_move_index_list.push(index);
+                }
+            }
+        }
+    }
+
+    var potential_move_list = new Array();
+    for(var i = 0; i < potential_move_index_list.length; i++) {
+        for(var j = 0; j < DIRECTIONS.length; j++) {
+            var temp = potential_move_index_list[i];
+            var index = calcIndexTo(temp, DIRECTIONS[j]);
+            if(isFlippable(index, player, DIRECTIONS[j])) {
+                potential_move_list.push(temp);
+                //System.out.println(temp);
+                break;
+            }
+        }
+    }
+    return potential_move_list;
+}
+
+function get_winner() {
+    var points_player_one = 0;
+    var points_player_two = 0;
+    
+    for(var i = 0; i < map.length; i++) {
+        if(map[i] == COLOR_PLAYER_ONE) {
+            points_player_one++;
+        }
+        if(map[i] == COLOR_PLAYER_TWO) {
+            points_player_two++;
+        }
+    }
+
+    if(points_player_one == points_player_two) {
+        alert("unentschieden!");
+    } else if(points_player_one > points_player_two) {
+        alert("spieler 1 gewinnt");
+    } else {
+        alert("spieler 2 gewinnt");
+    }
+}
+
 //switch player current player
 function switch_player() {
     if(current_player == COLOR_PLAYER_ONE) {
         current_player = COLOR_PLAYER_TWO;
-    }
-    else {
+    } else {
         current_player = COLOR_PLAYER_ONE;
     }
 }
@@ -83,8 +145,8 @@ function draw_board() {
     var x = 0;
     var y = 0;
     for (var index = 0; index < COLS * ROWS; index++) {
-        if(map[index] != COLOR_BLOCKED) {
-            if(x == COLS - 2) {
+        if(map[index] != COLOR_BLOCKED || DEBUG == 0) {
+            if(x == COLS - 2 * DEBUG) {
                 y++;
                 x = 0;
             }
@@ -97,6 +159,13 @@ function draw_board() {
 //check block if it is playerblock
 function is_player(index){
     if(map[index] == COLOR_PLAYER_ONE || map[index] == COLOR_PLAYER_TWO) {
+        return true;
+    }
+    return false;
+}
+
+function is_empty(index) {
+    if(map[index] == COLOR_BOARD) {
         return true;
     }
     return false;
@@ -161,13 +230,12 @@ function board_click(ev) {
     y = ev.clientY - canvas.offsetTop,
     clickedBlock = screen_to_block(x, y);
     //check that block is empty
-    if(!is_player(block_to_index(clickedBlock.row + 1, clickedBlock.col + 1))) {
-        map[block_to_index(clickedBlock.row + 1, clickedBlock.col + 1)] = current_player;
-        add(block_to_index(clickedBlock.row + 1, clickedBlock.col + 1), current_player);
+    if(!is_player(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG))) {
+        map[block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG)] = current_player;
+        add(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG), current_player);
         draw_board();
         switch_player();
-    }
-    else {
+    } else {
         alert("error, move is not supported");
     }
 }
@@ -179,11 +247,11 @@ function board_hover(ev) {
     clickedBlock = screen_to_block(x, y);
     //field-switch
     if(current_row != clickedBlock.row || current_col != clickedBlock.col) {
-        draw_block(current_row, current_col,map[block_to_index(current_row + 1,current_col + 1)]);
+        draw_block(current_row, current_col,map[block_to_index(current_row + DEBUG,current_col + DEBUG)]);
         current_row = clickedBlock.row;
         current_col = clickedBlock.col;
         //field is not a player
-        if(map[block_to_index(current_row + 1,current_col + 1)]==COLOR_BOARD) {
+        if(map[block_to_index(current_row + DEBUG, current_col + DEBUG)]==COLOR_BOARD) {
             draw_block(current_row, current_col, COLOR_HOVER); 
         }
     }
@@ -210,7 +278,7 @@ function renew_canvas_size() {
         ctx.canvas.height = ctx.canvas.width;
     }
         
-    block_size = (canvas.width/(COLS - 2)) - SHADOW_SIZE;
+    block_size = (canvas.width/(COLS - 2 * DEBUG)) - SHADOW_SIZE;
     draw_board();
 }
 
