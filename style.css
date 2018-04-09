@@ -92,6 +92,12 @@ footer {
     max-width: 800px;
 }
 
+#article {
+    font-family: "opensansregular", Arial, Helvetica, sans-serif;
+    margin-top: 30px;
+    font-size: 20pt;
+}
+
 a {
     text-decoration: none;
 }
