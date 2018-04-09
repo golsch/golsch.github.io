@@ -1,5 +1,5 @@
-const COLS = 6 + 2;
-const DEBUG = 1;
+const COLS = 4 + 2;
+const DEBUG = 0;
 //quadratic field
 const ROWS = COLS;
 const SHADOW_SIZE = 1;
@@ -74,10 +74,11 @@ Array.prototype.contains = function (v) {
 }
 
 function possible_moves(player) {
+    console.log("give this sgit");
     var enemy_index_list = new Array();
     for (var index = 0; index < map.length; index++) {
-        if(is_player(map[index]) && map[index] != player) {
-           enemy_index_list.push(index);
+        if(is_player(index) && map[index] != player) {
+            enemy_index_list.push(index);
         }
     }
 
@@ -85,8 +86,8 @@ function possible_moves(player) {
     var potential_move_index_list = new Array();
     for (var i = 0; i < enemy_index_list.length; i++) {
         for (var j = 0; j < DIRECTIONS.length; j++) {
-            var index = calcIndexTo(enemy_index_list[i], DIRECTIONS[j]);
-            if(is_empty(map[index])) {
+            var index = index_to_direction(enemy_index_list[i], DIRECTIONS[j]);
+            if(is_empty(index)) {
                 if(!potential_move_index_list.contains(index)) {
                     potential_move_index_list.push(index);
                 }
@@ -98,8 +99,8 @@ function possible_moves(player) {
     for(var i = 0; i < potential_move_index_list.length; i++) {
         for(var j = 0; j < DIRECTIONS.length; j++) {
             var temp = potential_move_index_list[i];
-            var index = calcIndexTo(temp, DIRECTIONS[j]);
-            if(isFlippable(index, player, DIRECTIONS[j])) {
+            var index = index_to_direction(temp, DIRECTIONS[j]);
+            if(is_flippable(index, player, DIRECTIONS[j])) {
                 potential_move_list.push(temp);
                 //System.out.println(temp);
                 break;
@@ -230,11 +231,19 @@ function board_click(ev) {
     y = ev.clientY - canvas.offsetTop,
     clickedBlock = screen_to_block(x, y);
     //check that block is empty
-    if(!is_player(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG))) {
-        map[block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG)] = current_player;
+    
+    
+    if(possible_moves(current_player).contains(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG)) ) {
         add(block_to_index(clickedBlock.row + DEBUG, clickedBlock.col + DEBUG), current_player);
         draw_board();
         switch_player();
+        if(possible_moves(current_player).length == 0) {
+            switch_player;
+            if(possible_moves(current_player).length == 0) {
+                get_winner();
+            }
+        }
+        no_compute++;
     } else {
         alert("error, move is not supported");
     }
