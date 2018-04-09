@@ -32,7 +32,7 @@ header {
 
 #body {
     padding:0px;
-    padding-bottom:20px;   /* Height of the footer */
+    padding-bottom:50px;   /* Height of the footer */
 	max-width: 800px;
     margin: auto;
     padding-left:10px;
