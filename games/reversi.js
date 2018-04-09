@@ -1,8 +1,8 @@
-const COLS = 6 + 2;
+const COLS = 4 + 2;
 const DEBUG = 1;
 //quadratic field
 const ROWS = COLS;
-const SHADOW_SIZE = 1;
+const SHADOW_SIZE = 3;
 const COLOR_BOARD = "white";
 const COLOR_PLAYER_ONE = "red";
 const COLOR_POSS_MOVE = "lightgoldenrodyellow";
