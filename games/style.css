@@ -60,6 +60,29 @@ body {
     color:#999;
 }
 
+#itemhead {
+    margin: auto;
+    margin-top: 20px;
+    
+    padding-right:10px;
+    font-family: "opensansregular", Arial, Helvetica, sans-serif;
+    font-size: 19pt;
+    font-weight:400;
+    text-transform: uppercase;
+    max-width: 800px;
+}
+
+#desc {
+    margin: auto;
+    margin-top: 25px;
+    
+    padding-right:10px;
+    font-family: "opensansregular", Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-weight:400;
+    max-width: 800px;
+}
+
 #reversi{
     margin-top:20px;
     padding-left: 0;
