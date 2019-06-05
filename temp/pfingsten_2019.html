@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-	    <meta charset="utf-8">
+   <meta charset="utf-8">
         <title>lennard-golsch.de</title>
         <link rel="shortcut icon" type="image/png" href="../favicon.png">
         <link rel="canonical" href="https://www.lennard-golsch.de/">
-        <link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="style.css">
-    </head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       	<!--<link rel="stylesheet" href="../style.css">-->
+       <script>
+           time = new Date();
+           hours = time.getHours();
+           if(hours > 22 || hours < 8) {
+               document.write("<link rel='stylesheet' href='../style_dark.css'>");
+           } else {
+               document.write("<link rel='stylesheet' href='../style_bright.css'>");
+           }
+        </script>
     <body>
         <div id="container">
             <header><div id="header_test"><a href="/">lennard-golsch.de</a></div></header>
             <div id="body">
-                <p id = "itemhead">Pfingsten 2018</p>
+                <p id = "itemhead">Pfingsten 2019</p>
                 <iframe src="https://www.google.com/maps/d/embed?mid=16X-AqoWsfkyE1YfwoYv9HAgB5jZqZ8H2" width="800" height="800" id="maps"></iframe>
                 <div id = "desc">
                     <p>Wie in jedem Jahr, so auch in diesem Jahr, sind wir wieder zusammengekommen, um das traditionelle Pfingstbaumbegießen, zu begehen. </p>
 			<p>Der edle Besitzer, dieses wunder, wunderschönen Baumes, lebe: hoch, hoch, hoch!</p>
-			<a href="pfingsten_2018_final.pdf" download>Liste 2018</a>
+			<a href="pfingsten_2019_final.pdf" download>Liste 2019</a>
                 </div>
             </div>
-            <footer><div id="footer_test">Copyright © 2018 - Lennard Golsch</div></footer>
+            <footer><div id="footer_test">Copyright © 2019 - Lennard Golsch</div></footer>
         </div>
     </body>
 </html>
