@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	    <meta charset="utf-8">
+        <title>lennard-golsch.de</title>
+        <link rel="shortcut icon" type="image/png" href="../favicon.png">
+        <link rel="canonical" href="https://www.lennard-golsch.de/">
+
+        <script src="jquery.js"></script>
+        <script src="util.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--<link rel="stylesheet" href="../style.css">-->
+       <script>
+           time = new Date();
+           hours = time.getHours();
+           if(hours > 22 || hours < 8) {
+               document.write("<link rel='stylesheet' href='../style_dark.css'>");
+           } else {
+               document.write("<link rel='stylesheet' href='../style_bright.css'>");
+           }
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <header><div id="header_test"><a href="/">lennard-golsch.de</a></div></header>
+            <div id="body">
+                <p id = "itemhead"></p>
+                <div id = "desc" style="word-break: break-word;">
+                    <p id="content">a741656b3883a89c1f0b3f5a3e1f1d82c38264f34b36e11543b69ca68e17f1d4</p>
+                    <div style="border-color: red; border-width: 1px; border-style: solid; float:left; width: 70px; text-align: center; cursor:pointer;" onclick="action()" id="button">Unhash</div>
+
+                    <br>
+                    <br>
+      				<iframe style="width:100%; visibility: hidden;" height="315" src="https://www.youtube.com/embed/TDe1DqxwJoc" id ="player"> </iframe>
+      				<br>
+      				<p id="what" style="visibility: hidden;"> <a href="https://de.wikipedia.org/wiki/Base64" target="_blank" style="color:red; text-decoration: underline;">Unhash/Hash - Gibt es das wirklich, was bringt das?</a></p>
+                </div>
+            </div>
+            <footer><div id="footer_test">Copyright © 2018 - Lennard Golsch</div></footer>
+        </div>
+    </body>
+</html>
+
