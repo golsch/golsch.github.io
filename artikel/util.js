@@ -106,7 +106,7 @@ function action() {
         button.innerHTML = "Unhash";
         decoded = false;
     } else {
-       content.innerHTML = '"I think you’re the same as me, we see things they’ll never see."';
+       content.innerHTML = '"Maybe you\'re the same as me, we see things they\'ll never see"';
        button.innerHTML = "Hash";
        decoded = true;
     }
