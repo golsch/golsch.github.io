@@ -102,11 +102,11 @@ function action() {
     }
 
     if (decoded) {
-        content.innerHTML = "a741656b3883a89c1f0b3f5a3e1f1d82c38264f34b36e11543b69ca68e17f1d4";
+        content.innerHTML = "f699eaa74919240fe093b7b5a3686396b62d4c1e";
         button.innerHTML = "Unhash";
         decoded = false;
     } else {
-       content.innerHTML = '"Maybe you\'re the same as me, we see things they\'ll never see"';
+       content.innerHTML = '"Maybe you\'re the same as me, we see things they\'ll never see" &ndash; Noel Gallagher';
        button.innerHTML = "Hash";
        decoded = true;
     }
