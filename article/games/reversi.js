@@ -2,13 +2,13 @@ const COLS = 8 + 2;
 const DEBUG = 1;
 //quadratic field
 const ROWS = COLS;
-const SHADOW_SIZE = 4;
-const COLOR_BOARD = "white";
-const COLOR_PLAYER_ONE = "red";
-const COLOR_POSS_MOVE = "lightgoldenrodyellow";
-const COLOR_PLAYER_TWO = "green";
+const SHADOW_SIZE = 2;
+const COLOR_BOARD = "black";
+const COLOR_PLAYER_ONE = "#32a8a8";
+const COLOR_POSS_MOVE = "white";
+const COLOR_PLAYER_TWO = "#a83287";
 const COLOR_HOVER = "grey";
-const COLOR_BLOCKED = "black";
+const COLOR_BLOCKED = "red";
 const DIRECTIONS = new Array("LEFT","RIGHT","UP", "DOWN", "UPLEFT", "UPRIGHT", "DOWNLEFT", "DOWNRIGHT");
 //---------------
 var current_color = null;
@@ -313,7 +313,7 @@ function renew_canvas_size() {
             ctx.canvas.height = ctx.canvas.width;
     }
     else {
-        ctx.canvas.width = window.innerWidth - 20;
+        ctx.canvas.width = window.innerWidth - 50;
         ctx.canvas.height = ctx.canvas.width;
     }
         

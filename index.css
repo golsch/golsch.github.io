@@ -1,0 +1,111 @@
+body {
+	font-family: Arial,Verdana,Tahoma;
+	font-size: 12px;
+	padding:0px;
+	margin:0px;
+	height: 100%;
+	background-color: black;
+    color: white;
+}
+
+
+
+
+main {
+	min-height: calc(100vh - 150px);
+	margin:0px auto 0px;
+	padding-left: 10px;
+	max-width: 800px;
+	padding-bottom: 33px;
+}
+
+
+footer {
+	width: 100%;
+	margin:0px auto;
+	max-width: 800px;
+	//border-top: 1px solid #e8e8e8;
+	padding-top: 10px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+img { /* svg on an img tag */
+  -webkit-filter: invert(1); /* safari 6.0 - 9.0 */
+          filter: invert(1);
+}
+
+
+#nav {
+	min-height: 40px;
+	//border-bottom: 1px solid #e8e8e8;
+	font-size: 23px;
+	padding-top: 15px;
+	padding-left: 0px;
+	margin-top: 10px;
+	padding-bottom: 15px;
+	margin: auto;
+	max-width: 800px;
+	font-weight: 555;
+}
+
+#nav-color {
+	min-height: 4px;
+	width: 100%;
+	background: white;
+
+}
+
+#nav-name {
+	float:left;
+	padding-right: 40px;
+	margin-left: -2px;
+}
+
+.nav-item {
+	float: left;
+	padding-right: 15px;
+}
+
+
+.article {
+	margin-top: 30px;
+	width: 100%;
+	word-break: break-word;
+}
+
+.article-name {
+	font-size: 25px;
+}
+
+#nav-social {
+	margin-top: 3px;
+	padding-bottom: 10px;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+    color: white;
+  }
+
+  a {
+  	color: white;
+}
+
+
+
+#nav-color {
+	background: white;
+
+}
+img { /* svg on an img tag */
+  -webkit-filter: invert(1); /* safari 6.0 - 9.0 */
+          filter: invert(1);
+}
+}
+

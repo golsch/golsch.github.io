@@ -1,46 +1,74 @@
 <!DOCTYPE html>
-<html>
-    <head>
-	    <meta charset="utf-8">
-        <title>lennard-golsch.de</title>
-        <link rel="shortcut icon" type="image/png" href="/favicon.png">
-        <link rel="canonical" href="https://www.lennard-golsch.de/">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--        <link rel="stylesheet" href="style.css">-->
-       <script>
-           time = new Date();
-           hours = time.getHours();
-           if(hours > 22 || hours < 8) {
-               document.write("<link rel='stylesheet' href='style_dark.css'>");
-           } else {
-               document.write("<link rel='stylesheet' href='style_bright.css'>");
-           }
-        </script>
-    </head>
-    <body>
-        <div id="container">
-            <header><div id="header_test"><a href="/">lennard-golsch.de</a></div></header>
-            <div id="body">
-                <p id = "itemhead">Aktuelles</p>
-		     
-		<div id = "article">
-                    <div id = "article-date">24. Juni 2019</div>
-                    <a href="artikel/fwiw.html">FWIW</a>
-                    <div id = "article-desc">f699eaa74919240fe093b7b5a3686396b62d4c1e</div>
-                </div>
-                <div id = "article">
-                    <div id = "article-date">9. April 2018</div>
-                    <a href="spiele/reversi.html">Reversi</a>
-                    <div id = "article-desc">Simple Implementierung des Spieleklassikers Reversi mit Oberfläche und noch unterentwickelter KI.</div>
-                </div>
-                <div id = "article">
-                    <div id = "article-date">6. April 2018</div>
-                    <a href="artikel/turing-und-von-neumann-architektur.html">Zusammenhang zwischen UTM und VNA</a>
-                    <div id = "article-desc">Kurze Zusammenfassung wichtiger Relationen zwischen den Komponenten der Universal Turing Maschine und den Komponenten der Von-Neumann-Architektur.</div>
-                </div>
+<html lang="de">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="index.css">
+    <script src="util.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>lennard-golsch.de</title>
+  </head>
+  <body>
+      <div id="nav-color"></div>
+      <header>
+        <nav>
+          <div id="nav">
+            <div id="nav-name">
+              <a href="default.asp"><img src=logo.png height="50px"><img></a>
             </div>
-            <footer><div id="footer_test">Copyright © 2018 - Lennard Golsch</div></footer>
+          </div>
+        </nav>
+      </header>
+    
+    <div id="wrapper">
+    <main>
+      <div class="article">
+        <div>Bald.</div>
+        <div class="article-name">
+          <a id="a5" href="">WebAssembly</a>
         </div>
-    </body>
-</html>
+        <div>WebAssembly wird das Web revolutionieren. Im Rahmen einer Seminararbeit habe ich mich damit beschäftigt.</div>
+      </div>
+      <div class="article">
+        <div>3. September 2019</div>
+        <div class="article-name">
+          <a id="a3" href="article/bundesliga-2019.html">Bundesliga-Orakel 2019/2020</a>
+        </div>
+        <div>So tippe ich den Meister und die Absteiger.</div>
+      </div>
+      <div class="article">
+        <div>24. Juni 2019</div>
+        <div class="article-name">
+          <a id="a2" href="article/fwiw.html">FWIW</a>
+        </div>
+        <div>f699eaa74919240fe093b7b5a3686396b62d4c1e.</div>
+      </div>
+      <div class="article">
+        <div>9. April 2018</div>
+        <div class="article-name">
+          <a id="a1" href="article/games/reversi.html">Reversi</a>
+        </div>
+        <div>Simple Implementierung des Spiels.</div>
+      </div>
 
+      <div class="article">
+        <div>6. April 2018</div>
+        <div class="article-name">
+          <a id="a0" href="article/turing-und-von-neumann-architektur.html">Zusammenhang zwischen UTM und VNA</a>
+        </div>
+        <div>Zusammenfassung wichtiger Relationen zwischen den Komponenten der Universal Turing Maschine und <br>den Komponenten der Von-Neumann-Architektur.</div>
+      </div>
+    </main>
+  </div>
+  
+
+    <footer>
+      <div id="nav-social">
+        <a href="https://facebook.com/lennard.golsch"><img src="social/facebook.svg" height="30"/></a>
+        <a href="mailto:lennard.golsch@icloud.com"><img src="social/mail.svg" height="30"/></a>
+        <a href="https://www.deezer.com/de/profile/714659731"><img src="social/play.svg" height="30"/></a>
+        <a href="https://www.xing.com/profile/Lennard_Golsch/cv"><img src="social/xing.svg" height="30"/></a>
+        <a href="https://github.com/legose95"><img src="social/github.svg" height="30"/></a>
+      </div>
+    </footer>
+  </body>
+</html>

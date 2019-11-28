@@ -1,0 +1,37 @@
+#head {
+margin: auto;
+margin-top: 30px;
+    padding-right:10px;
+    font-size: 19pt;
+    font-weight:400;
+    text-transform: uppercase;
+}
+
+#desc {
+    margin-top: 25px;
+    padding-right:10px;
+    font-size: 12pt;
+    font-weight:400;
+}
+
+table, th, td { 
+  border-collapse: collapse;
+  padding:0.3em 0.5em; 
+}
+
+
+th, caption { 
+  color: #fff; 
+  border: 1px solid #666;
+}
+
+
+tfoot {
+  border-bottom: 1px solid #666;
+}
+
+caption {
+  font-size: 1.5em;
+  border-radius: 0.5em 0.5em 0 0;
+  padding: 0.5em 0 0 0
+}
